@@ -1,8 +1,340 @@
-Paracetamol:
-https://pkhushnuma0022-ui.github.io/Pharmasafe/?medicine=paracetamol
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHARMASAFE</title>
 
-Amoxicillin:
-https://pkhushnuma0022-ui.github.io/Pharmasafe/?medicine=amoxicillin
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f8f6;
+  margin:0;
+  padding:20px;
+  color:#222;
+}
+.container{
+  max-width:750px;
+  margin:auto;
+}
+.header{
+  background:#176b57;
+  color:white;
+  padding:25px;
+  border-radius:18px;
+  text-align:center;
+}
+.header h1{
+  margin:0;
+  font-size:30px;
+}
+.header p{
+  margin:8px 0 0;
+}
+.card{
+  background:white;
+  margin-top:18px;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+h2,h3{
+  color:#176b57;
+}
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.box{
+  background:#f1f7f5;
+  padding:12px;
+  border-radius:10px;
+}
+.status{
+  padding:12px;
+  border-radius:10px;
+  font-weight:bold;
+  text-align:center;
+  margin-top:15px;
+}
+.safe{
+  background:#d9f5df;
+  color:#176b2c;
+}
+.near{
+  background:#fff0c2;
+  color:#8a6200;
+}
+.expired{
+  background:#ffdada;
+  color:#a40000;
+}
+ul{
+  padding-left:20px;
+}
+.reminder{
+  background:#eef4ff;
+  padding:15px;
+  border-radius:12px;
+}
+button{
+  background:#176b57;
+  color:white;
+  border:0;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:15px;
+}
+select{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:16px;
+}
+.footer{
+  text-align:center;
+  margin:20px;
+  color:#666;
+  font-size:13px;
+}
+@media(max-width:600px){
+  .info{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
 
-Ibuprofen:
-https://pkhushnuma0022-ui.github.io/Pharmasafe/?medicine=ibuprofen
+<body>
+
+<div class="container">
+
+<div class="header">
+  <h1>💊 PHARMASAFE</h1>
+  <p>Scan. Know. Stay Safe.</p>
+  <small>Smart Medicine Information, Adherence & Expiry Management System</small>
+</div>
+
+<div class="card">
+  <h2>🔎 Medicine Information</h2>
+
+  <select id="medicineSelect" onchange="changeMedicine()">
+    <option value="paracetamol">Paracetamol 500 mg</option>
+    <option value="amoxicillin">Amoxicillin 500 mg</option>
+    <option value="ibuprofen">Ibuprofen 400 mg</option>
+  </select>
+</div>
+
+<div class="card">
+
+<h2 id="medicineName"></h2>
+
+<div class="info">
+  <div class="box"><b>Batch No.</b><br><span id="batch"></span></div>
+  <div class="box"><b>Quantity</b><br><span id="quantity"></span></div>
+  <div class="box"><b>Manufacturing Date</b><br><span id="mfg"></span></div>
+  <div class="box"><b>Expiry Date</b><br><span id="expiry"></span></div>
+</div>
+
+<div id="status" class="status"></div>
+
+<h3>💡 Uses / Indications</h3>
+<p id="uses"></p>
+
+<h3>💊 Dose / How to Take</h3>
+<p id="dose"></p>
+
+<h3>⚠️ Adverse Effects</h3>
+<p id="effects"></p>
+
+<h3>🚨 Precautions / Warnings</h3>
+<p id="precautions"></p>
+
+<h3>🔄 Drug / Food Interactions</h3>
+<p id="interactions"></p>
+
+<div class="reminder">
+<h3>⏰ Drug Adherence</h3>
+<p id="adherence"></p>
+<button onclick="setReminder()">Set Reminder</button>
+</div>
+
+<h3>📦 Expiry Management</h3>
+<p id="action"></p>
+
+</div>
+
+<div class="footer">
+  PHARMASAFE – Prototype for Innovation Competition
+</div>
+
+</div>
+
+<script>
+
+const medicines = {
+
+paracetamol:{
+ name:"Paracetamol 500 mg Tablets",
+ batch:"PCT2594",
+ quantity:"40 Tablets",
+ mfg:"09/2025",
+ expiry:"09/2027",
+
+ uses:"Relief of mild to moderate pain and reduction of fever.",
+
+ dose:"Take only according to the medicine label or healthcare professional's advice. Do not exceed the recommended dose.",
+
+ effects:"Nausea, stomach discomfort or skin rash may occur. Serious allergic reactions require immediate medical attention.",
+
+ precautions:"Avoid taking multiple medicines containing paracetamol at the same time. Ask a healthcare professional if you have liver problems or regularly consume alcohol.",
+
+ interactions:"Check with a healthcare professional before combining with other medicines, especially products that may also contain paracetamol.",
+
+ adherence:"Take the medicine at the prescribed/labelled time and dose. A phone alarm can be used to avoid missed doses."
+},
+
+amoxicillin:{
+ name:"Amoxicillin 500 mg Capsules",
+ batch:"AMX2610",
+ quantity:"30 Capsules",
+ mfg:"10/2025",
+ expiry:"10/2026",
+
+ uses:"Used for susceptible bacterial infections when prescribed by a healthcare professional.",
+
+ dose:"Use only according to the prescription. Do not self-medicate with antibiotics.",
+
+ effects:"Nausea, diarrhoea and stomach upset may occur. Seek urgent medical help for signs of a serious allergic reaction.",
+
+ precautions:"Do not use if you have a known serious penicillin allergy unless specifically advised by a healthcare professional. Antibiotics do not treat viral colds or flu.",
+
+ interactions:"Tell your healthcare professional about other medicines you take because some medicines may interact with antibiotics.",
+
+ adherence:"Take at the prescribed intervals and complete the prescribed course unless your healthcare professional tells you otherwise."
+},
+
+ibuprofen:{
+ name:"Ibuprofen 400 mg Tablets",
+ batch:"IBU2603",
+ quantity:"20 Tablets",
+ mfg:"06/2025",
+ expiry:"06/2026",
+
+ uses:"Short-term relief of pain, inflammation and fever in appropriate patients.",
+
+ dose:"Take according to the medicine label or healthcare professional's instructions. Do not take extra doses.",
+
+ effects:"Indigestion, nausea and stomach discomfort may occur. Serious stomach bleeding or allergic reactions require urgent medical attention.",
+
+ precautions:"Avoid self-use if you have a history of stomach ulcer/bleeding, certain kidney problems, or have been advised to avoid NSAIDs.",
+
+ interactions:"May interact with some painkillers, blood thinners and other medicines. Check with a healthcare professional before combining medicines.",
+
+ adherence:"Follow the prescribed or labelled schedule and do not take additional doses unless instructed."
+}
+
+};
+
+function calculateStatus(expiry){
+
+  let parts = expiry.split("/");
+  let expiryDate = new Date(
+    parseInt(parts[1]),
+    parseInt(parts[0])-1,
+    1
+  );
+
+  let today = new Date();
+
+  let diff = expiryDate - today;
+  let days = diff / (1000*60*60*24);
+
+  if(days < 0){
+    return "expired";
+  }
+
+  if(days <= 90){
+    return "near";
+  }
+
+  return "safe";
+}
+
+function displayMedicine(){
+
+  let selected =
+    document.getElementById("medicineSelect").value;
+
+  let m = medicines[selected];
+
+  document.getElementById("medicineName").innerText=m.name;
+  document.getElementById("batch").innerText=m.batch;
+  document.getElementById("quantity").innerText=m.quantity;
+  document.getElementById("mfg").innerText=m.mfg;
+  document.getElementById("expiry").innerText=m.expiry;
+
+  document.getElementById("uses").innerText=m.uses;
+  document.getElementById("dose").innerText=m.dose;
+  document.getElementById("effects").innerText=m.effects;
+  document.getElementById("precautions").innerText=m.precautions;
+  document.getElementById("interactions").innerText=m.interactions;
+  document.getElementById("adherence").innerText=m.adherence;
+
+  let status=calculateStatus(m.expiry);
+
+  let statusBox=document.getElementById("status");
+
+  statusBox.className="status";
+
+  if(status==="safe"){
+    statusBox.classList.add("safe");
+    statusBox.innerText="✅ SAFE – Medicine is within expiry";
+    document.getElementById("action").innerText=
+      "Medicine can remain in stock. Continue normal inventory monitoring.";
+  }
+
+  else if(status==="near"){
+    statusBox.classList.add("near");
+    statusBox.innerText="⚠️ NEAR EXPIRY – Check stock and return policy";
+    document.getElementById("action").innerText=
+      "Identify near-expiry stock and follow the applicable supplier-return or stock-management procedure.";
+  }
+
+  else{
+    statusBox.classList.add("expired");
+    statusBox.innerText="❌ EXPIRED – DO NOT USE";
+    document.getElementById("action").innerText=
+      "Remove from usable stock, quarantine and follow approved expired-medicine disposal procedures.";
+  }
+}
+
+function changeMedicine(){
+  displayMedicine();
+}
+
+function setReminder(){
+  alert("⏰ Reminder demo activated! In a full version, the app can connect with phone notifications.");
+}
+
+function loadFromURL(){
+
+  let params=new URLSearchParams(window.location.search);
+  let medicine=params.get("medicine");
+
+  if(medicine && medicines[medicine]){
+    document.getElementById("medicineSelect").value=medicine;
+  }
+
+  displayMedicine();
+}
+
+loadFromURL();
+
+</script>
+
+</body>
+</html>
